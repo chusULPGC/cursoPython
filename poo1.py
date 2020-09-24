@@ -10,9 +10,15 @@ class Coche():
 
 
 	def arrancar(self,arrancamos):
-		self.enMarcha=arrancamos
-		if (self.enMarcha==True):
+		self.__enMarcha=arrancamos
+
+		if (self.__enMarcha==True):
+			chequeo=self.chequeo_interno() #chequeo almacena true o false dependiendo de chequeo_interno()
+
+		if (self.__enMarcha==True and chequeo==True):
 			return "Arrancado"
+		elif(self.__enMarcha==True and chequeo==False):
+			return "Algo ha ido mal en el chequeo. No se puede arrancar"
 		else:
 			return "Apagado"
 
@@ -20,6 +26,20 @@ class Coche():
 
 	def estado(self):
 		print "El coche tiene ", self.__ruedas, " ruedas. Un ancho de ", self.__ancho, " y un largo de ", self.__largoChasis
+
+
+
+	def chequeo_interno(self):
+		print "Realizando chequeo interno"
+		self.gasolina="ok"
+		self.aceite="ok"
+		self.puertas="cerradas"
+
+		if(self.gasolina=="ok" and self.aceite=="ok" and self.puertas=="cerradas"):
+			return True
+		else:
+			return False
+
 
 
 miCoche=Coche()
