@@ -2,10 +2,10 @@
 class Coche():
 
 	def __init__(self):
-		self.largoChasis=250
-		self.ancho=120
+		self.__largoChasis=250
+		self.__ancho=120
 		self.__ruedas=4 
-		self.enMarcha=False
+		self.__enMarcha=False
 
 
 
@@ -19,7 +19,7 @@ class Coche():
 
 
 	def estado(self):
-		print "El coche tiene ", self.__ruedas, " ruedas. Un ancho de ", self.ancho, " y un largo de ", self.largoChasis
+		print "El coche tiene ", self.__ruedas, " ruedas. Un ancho de ", self.__ancho, " y un largo de ", self.__largoChasis
 
 
 miCoche=Coche()
