@@ -13,7 +13,7 @@ class Coche():
 		self.__enMarcha=arrancamos
 
 		if (self.__enMarcha==True):
-			chequeo=self.chequeo_interno() #chequeo almacena true o false dependiendo de chequeo_interno()
+			chequeo=self.__chequeo_interno() #chequeo almacena true o false dependiendo de chequeo_interno()
 
 		if (self.__enMarcha==True and chequeo==True):
 			return "Arrancado"
@@ -29,7 +29,7 @@ class Coche():
 
 
 
-	def chequeo_interno(self):
+	def __chequeo_interno(self):
 		print "Realizando chequeo interno"
 		self.gasolina="ok"
 		self.aceite="ok"
