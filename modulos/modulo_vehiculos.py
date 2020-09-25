@@ -1,4 +1,4 @@
-﻿class Vehiculos():
+class Vehiculos():
 	def __init__(self,marca,modelo):
 		self.marca=marca
 		self.modelo=modelo
@@ -51,56 +51,5 @@ class VElectricos(Vehiculos):
 
 	def cargarEnergia(self):
 		self.cargando=True
-
-
-
-print ("--------------------------------------------Creamos objeto Moto--------------------------------------------")
-
-miMoto=Moto("Honda","CBR")
-
-
-miMoto.caballito()
-
-
-miMoto.estado()
-
-print ("--------------------------------------------Creamos objeto Furgoneta--------------------------------------------")
-
-miFurgoneta=Furgoneta("Renault","Kangoo")
-miFurgoneta.arrancar()
-miFurgoneta.estado()
-print (miFurgoneta.carga(True))
-
-
-
-class BicicletaElectrica(VElectricos,Vehiculos):
-	pass
-
-print ("--------------------------------------------Creamos objeto BicicletaElectrica--------------------------------------------")
-
-miBici=BicicletaElectrica("BH","Top Line")
-
-miBici.estado()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
