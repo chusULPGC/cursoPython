@@ -16,7 +16,7 @@
 		self.frena=True
 
 	def estado(self):
-		print "Marca: ", self.marca, "\nModelo: ",self.modelo, "\nEn Marcha: ", self.enMarcha, "\nAcelarando: ",self.acelera, "\nFrenando: ",self.frena, 
+		print ("Marca: ", self.marca, "\nModelo: ",self.modelo, "\nEn Marcha: ", self.enMarcha, "\nAcelarando: ",self.acelera, "\nFrenando: ",self.frena,) 
 
 
 
@@ -39,10 +39,22 @@ class Moto(Vehiculos):
 
 
 	def estado(self):
-		print "Marca: ", self.marca, "\nModelo: ",self.modelo, "\nEn Marcha: ", self.enMarcha, "\nAcelarando: ",self.acelera, "\nFrenando: ",self.frena,"\n", self.hcaballito
+		print ("Marca: ", self.marca, "\nModelo: ",self.modelo, "\nEn Marcha: ", self.enMarcha, "\nAcelarando: ",self.acelera, "\nFrenando: ",self.frena,"\n", self.hcaballito)
 
 
-print "--------------------------------------------Creamos objeto Moto--------------------------------------------"
+
+class VElectricos(Vehiculos):
+	def __init__(self,marca,modelo):
+
+		super().__init__(marca,modelo)
+		self.autonomia=100
+
+	def cargarEnergia(self):
+		self.cargando=True
+
+
+
+print ("--------------------------------------------Creamos objeto Moto--------------------------------------------")
 
 miMoto=Moto("Honda","CBR")
 
@@ -52,9 +64,40 @@ miMoto.caballito()
 
 miMoto.estado()
 
-print "--------------------------------------------Creamos objeto Furgoneta--------------------------------------------"
+print ("--------------------------------------------Creamos objeto Furgoneta--------------------------------------------")
 
 miFurgoneta=Furgoneta("Renault","Kangoo")
 miFurgoneta.arrancar()
 miFurgoneta.estado()
-print "\n",miFurgoneta.carga(True)
+print ("\n",miFurgoneta.carga(True))
+
+
+
+class BicicletaElectrica(VElectricos,Vehiculos):
+	pass
+
+
+miBici=BicicletaElectrica("BH","Top Line")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
