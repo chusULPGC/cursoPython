@@ -7,6 +7,5 @@ miCoche.arrancar()
 
 miCoche.acelerar()
 
-miCoche.frenar()
 
 miCoche.estado()
