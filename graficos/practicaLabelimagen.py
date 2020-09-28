@@ -10,9 +10,9 @@ miFrame=Frame(root,width=500,height=400)
 miFrame.pack()
 
 
-miImagen=PhotoImage(file="paisaje3.gif")
+miImagen=PhotoImage(file="paisaje2.gif")
 
-Label(miFrame,image=miImagen)
+miLabel=Label(miFrame,image=miImagen)
 
 miLabel.place(x=100,y=200)
 
