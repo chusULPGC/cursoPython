@@ -6,13 +6,16 @@ from os import remove
 
 
 root=Tk()
+root.config(bg="#9DC3DB")
+root.resizable(0,0)# con esto evito que se pueda agrandar el tamaño de la ventana
 
 barraMenu=Menu(root)
 
-root.config(menu=barraMenu, width=300, height=500)
+root.config(menu=barraMenu, width=300, height=300)
 
-miFrame=Frame(root, width=1200, height=700)
-miFrame.config(bg="#F5F3F3")
+miFrame=Frame(root)
+miFrame.config(bg="#9DC3DB")
+
 
 
 miFrame.pack()
@@ -83,6 +86,8 @@ def crear():
 
 	miConexion.close()
 	messagebox.showinfo("BBDD","Datos insertados correctamente")
+	limpiarCampos()
+
 
 
 
@@ -92,19 +97,23 @@ def leer():
 	miCursor=miConexion.cursor()
 
 	identificador=cuadroId.get()
-	
+	print(identificador)
 
-	miCursor.execute("SELECT * FROM DATOSUSUARIO WHERE ID=?",(identificador))
+	miCursor.execute("SELECT * FROM DATOSUSUARIO WHERE ID=?", identificador)
+	limpiarCampos()
+
 	
 	personas=miCursor.fetchall()
 
 	for persona in personas:
+		ident=persona[0]
 		name=persona[1]
 		clave=persona[2]
 		apellido=persona[3]
 		direccion=persona[4]
 		comentario=persona[5]
 
+	miId.set(ident)
 	miNombre.set(name)
 	miPass.set(clave)
 	miApellido.set(apellido)
@@ -114,7 +123,7 @@ def leer():
 	miConexion.commit()
 
 	miConexion.close()
-
+	
 
 
 def eliminar():
@@ -126,11 +135,18 @@ def eliminar():
 	identificador=cuadroId.get()
 
 
-	miCursor.execute("DELETE FROM DATOSUSUARIO WHERE ID=?",(identificador))
 
-	miConexion.commit()
+	valor=messagebox.askokcancel("Eliminar campo","¿Deseas eliminar el campo de la Base de datos?") #askokcancel devuelve un valor(True,False)
 
-	miConexion.close()
+	if valor==True:
+	
+		miCursor.execute("DELETE FROM DATOSUSUARIO WHERE ID=?",(identificador,))
+
+		miConexion.commit()
+
+		miConexion.close()
+		messagebox.showinfo("BBDD","Campo eliminado correctamente")
+
 
 
 def actualizar():
@@ -139,14 +155,21 @@ def actualizar():
 
 	miCursor=miConexion.cursor()
 
+	identificador=cuadroId.get()
+	nombre=cuadroNombre.get()
+	password=cuadroPassword.get()
+	apellido=cuadroApellido.get()
+	direccion=cuadroDireccion.get()
+	comentario=textoComentario.get("1.0",'end-1c')
+
+	miCursor.execute("UPDATE DATOSUSUARIO SET NOMBRE_USUARIO=?, PASSWORD=?, APELLIDO=?, DIRECCION=?, COMENTARIOS=? WHERE ID=?",(nombre,password,apellido,direccion,comentario,identificador))
+
+
 	miConexion.commit()
 
 	miConexion.close()
-
-
-
-
-
+	messagebox.showinfo("BBDD","Datos actualizados correctamente")
+	limpiarCampos()
 
 
 
@@ -182,7 +205,7 @@ MenuCRUD.add_command(label="Crear", command=crear)
 
 MenuCRUD.add_command(label="Leer", command=leer)
 
-MenuCRUD.add_command(label="Actualizar")
+MenuCRUD.add_command(label="Actualizar", command=actualizar)
 
 MenuCRUD.add_command(label="Borrar", command=eliminar)
 
@@ -212,29 +235,35 @@ barraMenu.add_cascade(label="Ayuda", menu=MenuAyuda)
 
 #------------------------- ETIQUETAS(LABEL)-------------------------------------
 
-nombreLabel=Label(miFrame,text="Id:")
+idLabel=Label(miFrame,text="Id: ")
 
-nombreLabel.grid(row=0,column=0,sticky="e", padx=10, pady=10)
+idLabel.grid(row=0,column=0,sticky="w", padx=10, pady=10)
+idLabel.config(bg="#9DC3DB")
 
-nombreLabel=Label(miFrame,text="Nombre:")
+nombreLabel=Label(miFrame,text="Nombre: ")
 
-nombreLabel.grid(row=1,column=0,sticky="e", padx=10, pady=10)
+nombreLabel.grid(row=1,column=0,sticky="w", padx=10, pady=10)
+nombreLabel.config(bg="#9DC3DB")
 
-passwordLabel=Label(miFrame,text="Contraseña:")
+passwordLabel=Label(miFrame,text="Contraseña: ")
 
-passwordLabel.grid(row=2,column=0,sticky="e", padx=10, pady=10)
+passwordLabel.grid(row=2,column=0,sticky="w", padx=10, pady=10)
+passwordLabel.config(bg="#9DC3DB")
 
-apellidoLabel=Label(miFrame,text="Apellido:")
+apellidoLabel=Label(miFrame,text="Apellido: ")
 
-apellidoLabel.grid(row=3,column=0, sticky="e", padx=10, pady=10)
+apellidoLabel.grid(row=3,column=0, sticky="w", padx=10, pady=10)
+apellidoLabel.config(bg="#9DC3DB")
 
-direccionLabel=Label(miFrame,text="Dirección:")
+direccionLabel=Label(miFrame,text="Dirección: ")
 
-direccionLabel.grid(row=4,column=0,sticky="e", padx=10, pady=10)
+direccionLabel.grid(row=4,column=0,sticky="w", padx=10, pady=10)
+direccionLabel.config(bg="#9DC3DB")
 
-comentarioLabel=Label(miFrame,text="Comentarios:")
+comentarioLabel=Label(miFrame,text="Comentarios: ")
 
-comentarioLabel.grid(row=5,column=0,sticky="e", padx=10, pady=10)
+comentarioLabel.grid(row=5,column=0,sticky="w", padx=10, pady=10)
+comentarioLabel.config(bg="#9DC3DB")
 
 #------------------------- CUADROS DE TEXTO-------------------------------------
 miId=StringVar()
@@ -248,49 +277,57 @@ miComentario=StringVar()
 cuadroId=Entry(miFrame, textvariable=miId)
 
 cuadroId.grid(row=0,column=1, padx=10, pady=10)
+cuadroId.configure(font=("Courier", 16, "italic"))
 
 cuadroNombre=Entry(miFrame, textvariable=miNombre)
 
 cuadroNombre.grid(row=1,column=1, padx=10, pady=10)
+cuadroNombre.configure(font=("Courier", 16, "italic"))
 
 cuadroPassword=Entry(miFrame, textvariable=miPass)
 
 cuadroPassword.grid(row=2,column=1, padx=10, pady=10)
+cuadroPassword.configure(font=("Courier", 16, "italic"))
 
 cuadroPassword.config(show="*")
 
 cuadroApellido=Entry(miFrame, textvariable=miApellido)
 
 cuadroApellido.grid(row=3,column=1, padx=10, pady=10)
+cuadroApellido.configure(font=("Courier", 16, "italic"))
 
 cuadroDireccion=Entry(miFrame, textvariable=miDireccion)
 
-cuadroDireccion.grid(row=4,column=1)
+cuadroDireccion.grid(row=4,column=1, padx=10, pady=10)
+cuadroDireccion.configure(font=("Courier", 16, "italic"))
 
 #------------------------- AREA DE TEXTO-------------------------------------
 
-textoComentario=Text(miFrame, width=30, height=10,borderwidth=2)
+textoComentario=Text(miFrame, width=20, height=10,borderwidth=2)
 
 textoComentario.grid(row=5, column=1, padx=10, pady=10)
+textoComentario.configure(font=("Courier", 16, "italic"))
 
 
 #------------------------- BOTONES -------------------------------------
 
-botonCrear=Button(miFrame,text="Create",command=crear)
+miFrame2=Frame(root)
+miFrame2.config(bg="#6966F7")
+miFrame2.pack()
 
-botonCrear.grid(row=6,column=0)
+botonCrear=Button(miFrame2,text="Crear",command=crear)
 
-botonLeer=Button(miFrame,text="Read", command=leer)
+botonCrear.grid(row=1,column=0, sticky="e", padx=20, pady=10)
 
-botonLeer.grid(row=6,column=1)
+botonLeer=Button(miFrame2,text="Leer", command=leer)
 
-botonActualizar=Button(miFrame,text="Update")
+botonLeer.grid(row=1,column=1, sticky="e", padx=20, pady=10)
 
-botonActualizar.grid(row=6,column=2)
+botonActualizar=Button(miFrame2,text="Actualizar", command=actualizar)
 
-botonBorrar=Button(miFrame,text="Delete", command=eliminar)
+botonActualizar.grid(row=1,column=2, sticky="e", padx=20, pady=10)
 
-botonBorrar.grid(row=6,column=3,padx=10,pady=10)
+botonBorrar=Button(miFrame2,text="Eliminar", command=eliminar)
 
-
+botonBorrar.grid(row=1,column=3, sticky="e", padx=20, pady=10)
 root.mainloop()

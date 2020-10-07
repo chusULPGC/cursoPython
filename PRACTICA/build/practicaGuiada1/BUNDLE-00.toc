@@ -1,0 +1,3 @@
+([('practicaGuiada1',
+   '/Users/jesusizquierdopuebla/Desktop/pruebaspython/PRACTICA/dist/practicaGuiada1',
+   'EXECUTABLE')],)
